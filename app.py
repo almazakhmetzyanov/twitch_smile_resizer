@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import config
 from flask import Flask, flash, request, send_from_directory, jsonify
 from werkzeug.utils import secure_filename
 from image_converter import ImageConverter
@@ -7,8 +8,7 @@ from image_converter import ImageConverter
 app = Flask(__name__, static_folder='zip_files')
 upload_folder = '/home/tsr/'
 app.config['UPLOAD_FOLDER'] = upload_folder
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
-UPLOAD_FOLDER = '/home/tsr/'
+app.config['MAX_CONTENT_LENGTH'] = config.max_img_size_mb * 1024 * 1024
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
@@ -47,5 +47,5 @@ def dwnld(filename):
 
 
 if __name__ == "__main__":
-    app.debug = 'True'
-    app.run(host='0.0.0.0')
+    app.debug = config.debug
+    app.run(host=config.host)
