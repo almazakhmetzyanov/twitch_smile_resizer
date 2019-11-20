@@ -6,10 +6,9 @@ from werkzeug.utils import secure_filename
 from image_converter import ImageConverter
 
 app = Flask(__name__, static_folder='zip_files')
-upload_folder = '/home/tsr/'
-app.config['UPLOAD_FOLDER'] = upload_folder
+app.config['UPLOAD_FOLDER'] = config.upload_folder
 app.config['MAX_CONTENT_LENGTH'] = config.max_img_size_mb * 1024 * 1024
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
 def allowed_file(filename):
@@ -37,7 +36,7 @@ def twitch_smile_resizer():
             os.remove(file.filename)
             return jsonify({"error": "please add square image file"})
         os.remove(file.filename)
-        dwnld_url = 'http://corruptedmushroom.space:5000/dwnld/{}'.format(converted_images_name)
+        dwnld_url = 'http://{}:5000/dwnld/{}'.format(config.host, converted_images_name)
         return dwnld_url
 
 

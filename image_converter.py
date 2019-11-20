@@ -27,7 +27,7 @@ class ImageConverter:
             os.remove('28x28_{}'.format(img_path))
             os.remove('56x56_{}'.format(img_path))
             os.remove('112x112_{}'.format(img_path))
-            os.rename('/home/tsr/{}.zip'.format(archv_name), '/home/tsr/zip_files/{}.zip'.format(archv_name))
+            os.rename('./{}.zip'.format(archv_name), './zip_files/{}.zip'.format(archv_name))
             return '{}.zip'.format(archv_name)
         except Exception as e:
             print(e)
@@ -35,4 +35,4 @@ class ImageConverter:
 
 
 if __name__ == "__main__":
-    ImageConverter().convert_image_to_twitch_format(img_path='')
+    ImageConverter().convert_image_to_twitch_format(img_path='tebletki.png')
