@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# Owner: Almaz <almaz.akhmetzyanov@cinarra.com>
 import uuid
 
 from PIL import Image
