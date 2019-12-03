@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import config
-from flask import Flask, flash, request, send_from_directory, jsonify
+from flask import Flask, flash, request, send_from_directory, jsonify, send_file
 from werkzeug.utils import secure_filename
 from image_converter import ImageConverter
 
@@ -16,8 +16,10 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route("/tsr", methods=['POST'])
+@app.route("/", methods=['POST', 'GET'])
 def twitch_smile_resizer():
+    if request.method == 'GET':
+        return send_from_directory(directory='./', filename='index.html')
     if 'file' not in request.files:
         flash('No file part')
         return jsonify({"error": "please add square image file"})
@@ -36,15 +38,11 @@ def twitch_smile_resizer():
             os.remove(file.filename)
             return jsonify({"error": "please add square image file"})
         os.remove(file.filename)
-        dwnld_url = 'http://{}:5000/dwnld/{}'.format(config.host, converted_images_name)
-        return dwnld_url
-
-
-@app.route('/dwnld/<filename>', methods=['GET'])
-def dwnld(filename):
-    return send_from_directory(directory='zip_files', filename=secure_filename(filename))
+        return send_file(os.path.join('zip_files', converted_images_name), as_attachment=True)
 
 
 if __name__ == "__main__":
+    app.secret_key = 'super secret key'
+    app.config['SESSION_TYPE'] = 'filesystem'
     app.debug = config.debug
-    app.run(host=config.host)
+    app.run(host=config.flask_host, port=config.flask_port)
