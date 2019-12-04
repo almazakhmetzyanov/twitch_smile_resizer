@@ -32,7 +32,8 @@ def twitch_smile_resizer():
             return jsonify({"error": "please add square image file"})
 
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        converted_images_name = ImageConverter().convert_image_to_twitch_format(secure_filename(file.filename))
+        resample_type = request.form['resample']
+        converted_images_name = ImageConverter().convert_image_to_twitch_format(secure_filename(file.filename), resample=resample_type)
 
         if not converted_images_name:
             os.remove(file.filename)

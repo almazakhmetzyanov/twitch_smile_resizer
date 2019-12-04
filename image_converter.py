@@ -5,17 +5,28 @@ from PIL import Image
 import zipfile
 import os
 
+resample_types = {
+    "NEAREST": Image.NONE,
+    "BILINEAR": Image.BILINEAR,
+    "BOX": Image.BOX,
+    "HAMMING": Image.HAMMING,
+    "BICUBIC": Image.BICUBIC,
+    "LANCZOS": Image.LANCZOS
+}
+
 
 class ImageConverter:
+
     @staticmethod
-    def convert_image_to_twitch_format(img_path):
+    def convert_image_to_twitch_format(img_path, resample=resample_types['NEAREST']):
         try:
             img = Image.open(img_path)
             if img.width != img.height:
                 return False
-            img_28x28 = img.resize(size=[28, 28]).save('28x28_{}'.format(img_path), 'png')
-            img_56x56 = img.resize(size=[56, 56]).save('56x56_{}'.format(img_path), 'png')
-            img_112x112 = img.resize(size=[112, 112]).save('112x112_{}'.format(img_path), 'png')
+
+            img_28x28 = img.resize(size=[28, 28], resample=resample_types[resample]).save('28x28_{}'.format(img_path), 'png')
+            img_56x56 = img.resize(size=[56, 56], resample=resample_types[resample]).save('56x56_{}'.format(img_path), 'png')
+            img_112x112 = img.resize(size=[112, 112], resample=resample_types[resample]).save('112x112_{}'.format(img_path), 'png')
 
             archv_name = uuid.uuid1().hex
             img_archv = zipfile.ZipFile('{}.zip'.format(archv_name), 'w')

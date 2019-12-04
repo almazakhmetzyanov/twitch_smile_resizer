@@ -9,11 +9,17 @@
 <form method="post" enctype="multipart/form-data" style="margin: auto;
   width: 50%;
   border: 3px solid green;
-  padding: 10px;
-  margin: 25%">
+  padding: 10px">
     <div class="form-group">
         <label for="exampleFormControlFile1">Add square image for resizing to twitch format</label>
-        <br>
+        <p><b>Choose resample type:</b><Br>
+            <input type="radio" name="resample" value="NEAREST"> Nearest<Br>
+            <input type="radio" name="resample" value="BILINEAR"> Bilinear<Br>
+            <input type="radio" name="resample" value="BOX"> Box<Br>
+            <input type="radio" name="resample" value="HAMMING"> Hamming<Br>
+            <input type="radio" name="resample" value="BICUBIC"> Bicubic(recommend)<Br>
+            <input type="radio" name="resample" value="LANCZOS"> Lanczos<Br>
+        </p>
         <input type="file" class="form-control-file" id="exampleFormControlFile1" name="file" style="font-size: 12pt">
     </div>
     <button type="submit" class="btn btn-primary mb-2" formmethod="post" style="font-size: 15pt">Resize</button>
