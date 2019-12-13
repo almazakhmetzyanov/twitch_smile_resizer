@@ -28,7 +28,7 @@ class ImageConverter:
             img_56x56 = img.resize(size=[56, 56], resample=resample_types[resample]).save('56x56_{}'.format(img_path), 'png')
             img_112x112 = img.resize(size=[112, 112], resample=resample_types[resample]).save('112x112_{}'.format(img_path), 'png')
 
-            archv_name = uuid.uuid1().hex
+            archv_name = "{}_{}".format(img_path, uuid.uuid1().hex)
             img_archv = zipfile.ZipFile('{}.zip'.format(archv_name), 'w')
             img_archv.write('28x28_{}'.format(img_path))
             img_archv.write('56x56_{}'.format(img_path))
