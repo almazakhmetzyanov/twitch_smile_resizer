@@ -42,6 +42,15 @@ def twitch_smile_resizer():
         return send_file(os.path.join('zip_files', converted_images_name), as_attachment=True)
 
 
+@app.route("/images/<image_name>", methods=['GET'])
+def get_image(image_name):
+    allowed_images = ['background.jpg', 'bad.png', 'good.png']
+    if image_name not in allowed_images:
+        return jsonify({"error": "not allowed"})
+    else:
+        return send_file(os.path.join('images', image_name), as_attachment=True)
+
+
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
